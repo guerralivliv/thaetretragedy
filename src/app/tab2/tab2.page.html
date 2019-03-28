@@ -7,28 +7,32 @@
 </ion-header>
 
 <ion-content>
+      
+<form #fc="ngForm" (ngSubmit)="formDados(fc)">
   <ion-item>
     <ion-label position="floating">Nome</ion-label>
-    <ion-input [(ngModel)]="cliente.nome"></ion-input>
+    <ion-input [(ngModel)]="cliente.nome" name="nome" requeired></ion-input>
   </ion-item>
 
   <ion-item>
     <ion-label position="floating">E-mail</ion-label>
-    <ion-input [(ngModel)]="cliente.email" type="email" required></ion-input>
+    <ion-input [(ngModel)]="cliente.email" name="email" type="email" required email></ion-input>
   </ion-item>
 
   <ion-item>
     <ion-label position="floating">Senha</ion-label>
-    <ion-input [(ngModel)]="cliente.pws" type="password" required></ion-input>
+    <ion-input [(ngModel)]="cliente.pws" name="pws" type="password" required minlength="6" #pws="ngModel"></ion-input>
   </ion-item>
 
   <ion-item>
     <ion-label position="floating">Confimar Senha</ion-label>
-    <ion-input [(ngModel)]="confPws" type="password" required></ion-input>
+    <ion-input [(ngModel)]="confPws" type="password" name="confPws" required minlength="6" #conf="ngModel"></ion-input>
   </ion-item>
 
-  <ion-button (click)="addCliente(cliente)" [disabled]="!cliente.nome || !cliente.email || !cliente.pws || !confPws">
-    Salvar
-  </ion-button>
+    <span *ngIf="pws.value != conf.value">Senhas diferentes</span>
+
+  <ion-button type="submit" [disabled] = "!fc.valid">Salvar</ion-button>
+  <ion-button type="reset">Cancelar</ion-button>
+</form>
 
 </ion-content>
